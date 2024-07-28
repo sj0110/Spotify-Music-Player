@@ -114,7 +114,7 @@ button{
 .cardContainer{
     flex-wrap: wrap;
     gap: 20px;
-    max-height: 69vh;
+    max-height: 70vh;
     overflow-y: scroll;
 }
 .card {
@@ -126,13 +126,19 @@ button{
     flex-direction: column;
     overflow: hidden;
     position: relative;
+    cursor: pointer;
+    transition: all 0.8s;
 }
 .card:hover{
-    background-color: #202020;
+    background-color: #2d2d2d;
 }
-
+.card:hover p, .card:hover h4{
+    color: white;
+}
 .card h4 {
     font-weight: 500;
+    color: #a7a7a7;
+    transition: color 0.8s;
 }
 
 .card p {
@@ -143,6 +149,7 @@ button{
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.8s;
 }
 .card * {
     margin: 5px 0px;
@@ -205,9 +212,10 @@ body {
 
 .playbar {
     position: absolute;
+    flex-direction: column;
     gap:8px;
     width: 100%;
-    height:100px;
+    height:auto;
     border-top: 0.001px solid #353535;
     background-color: #000000;
     border-bottom-left-radius: 10px;
@@ -215,15 +223,18 @@ body {
     bottom: 0px;
 }
 .aboveBar{
-    position:absolute;
-    z-index: -1;
+    margin-top:20px;
+    position:relative;
     opacity:1;
     transition: opacity 0.5s ease;
     width: 93%;
-    margin-top:20px;
-    margin-bottom: 15px;
     margin-left:20px;
     justify-content: space-between;
+}
+.controlButtons {
+    position: absolute;
+    left: 50%;
+    
 }
 .songInfo{
     max-width: 25vw;
@@ -237,11 +248,11 @@ body {
 }
 .seekbar{
     width: 93%;
-    height:3px;
+    height:5px;
     margin-top:15px;
     margin-bottom: 15px;
     margin-left:20px;
-    background-color: #efefef;
+    background-color: #434343;
     border-radius: 3px;
     position: relative;
     cursor: pointer;
@@ -251,6 +262,7 @@ body {
     height:3px;
     background-color: #1CDF63;
     border-radius: 3px;
+
     transition: width 0.1s linear;
 }
 .circle{
@@ -303,6 +315,10 @@ body {
     font-weight: 500;
     margin-top:1px;
 }
+.songTime{
+    font-size: 12px;
+    text-align: right;
+}
 img.playNow{
     width: 30px;
 }
@@ -311,6 +327,7 @@ img.playNow{
 }
 .hamburger{
     display: none;
+    cursor:pointer;
 }
 .hamburgerContainer{
     gap:20px;
@@ -322,54 +339,93 @@ img.playNow{
     width:20px;
 }
 .volume{
+    cursor:pointer;
     gap:5px;
 }
-/* Style for the range input */
+.range input{
+    cursor:pointer;
+}
+
+.accent {
+    accent-color: #1CDF63;
+}
+
+input {
+    width: 100px;
+    height:10px;
+}
+/* Style for the range input
 input[type="range"] {
-    -webkit-appearance: none;  /* Remove default styling */
-    width: 80px;  /* Width of the slider */
+    -webkit-appearance: non
+    appearance: none; /* Remove default styling */
+    /* width: 80px;   Width of the slider
     height: 5px;  /* Height of the slider */
-    background: #ffffff;  /* Background color of the slider track */
-    outline: none;  /* Remove outline */
-    opacity: 0.7;  /* Set transparency */
+    /* background: #ffffff;   Background color of the slider track*/
+    /* outline: none;  /* Remove outline
+    opacity: 0.7;  /* Set transparency
     transition: opacity .2s;
-    border-radius: 10px;  /* Transition for opacity */
+    border-radius: 10px;  /* Transition for opacity
 }
 
-/* Style for the thumb (the draggable part) */
+/* Style for the thumb (the draggable part) 
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;  /* Remove default styling */
+    -webkit-appearance: none;  /* Remove default styling 
     appearance: none;
-    width: 15px;  /* Width of the thumb */
-    height: 15px;  /* Height of the thumb */
-    background: #1CDF63;  /* Color of the thumb */
-    cursor: pointer;  /* Cursor type when hovering over the thumb */
-    border-radius: 50%;  /* Make the thumb round */
+    width: 15px;  /* Width of the thumb 
+    height: 15px;  /* Height of the thumb 
+    background: #1CDF63;  /* Color of the thumb 
+    cursor: pointer;  /* Cursor type when hovering over the thumb 
+    border-radius: 50%;  /* Make the thumb round 
 }
 
-/* Style for the thumb in Firefox */
+/* Style for the thumb in Firefox 
 input[type="range"]::-moz-range-thumb {
-    width: 15px;  /* Width of the thumb */
-    height: 15px;  /* Height of the thumb */
-    background: #1CDF63;  /* Color of the thumb */
-    cursor: pointer;  /* Cursor type when hovering over the thumb */
-    border-radius: 50%;  /* Make the thumb round */
+    width: 15px;  /* Width of the thumb 
+    height: 15px;  /* Height of the thumb 
+    background: #1CDF63;  /* Color of the thumb 
+    cursor: pointer;  /* Cursor type when hovering over the thumb 
+    border-radius: 50%;  /* Make the thumb round 
 }
 
-/* Hover effect for the range input */
+/* Hover effect for the range input 
 input[type="range"]:hover {
-    opacity: 1;  /* Full opacity on hover */
+    opacity: 1;  /* Full opacity on hover 
 }
+ */
 
-
-@media (max-width: 1400px){
+@media (max-width: 768px){
     .left{
         position: absolute;
         left:-100%;
         transition: all 0.8s;
-        z-index: 1;
         width:300px;
         background-color: #000000;
+        z-index:1
+    }
+    .songInfo{
+        font-size: 16px;
+        max-width: 80%;
+    }
+    .aboveBar{
+        flex-direction: column;
+        gap:5px;
+        justify-content: center;
+    }
+    .controlButtons{
+        position: relative;
+        left:0;
+        margin:10px 0px;
+        
+    }
+    .timevol{
+        flex-direction: column;
+        gap:5px;
+    }
+    .seekbar{
+        margin-top: 5px;;
+    }
+    .controlButtons img{
+        width: 16px;
     }
     .cardContainer{
         max-height: 61vh;
@@ -377,14 +433,14 @@ input[type="range"]:hover {
         gap:10px;
     }
     .card{
-        width:130px;
+        width:40vw;
     }
     .play{
-        top:100px;
-        width:40px;
+        top:34vw;
+        width:8vw;
     }
     .card:hover .play {
-        top: 90px;
+        top: 32vw;
     }
     .close{
         display: block;
@@ -427,5 +483,29 @@ input[type="range"]:hover {
     }
     .seekbar{
         width: 90%;
+    }
+}
+@media (max-width: 450px){
+    .card{
+        width:35vw;
+    }
+    .play{
+        top:29vw;
+        width:8vw;
+    }
+    .card:hover .play {
+        top: 27vw;
+    }
+}
+@media (max-width:350px) {
+    .card{
+        width:98vw;
+    }
+    .play{
+        top:61vw;
+        width:18vw;
+    }
+    .card:hover .play {
+        top: 59vw;
     }
 }

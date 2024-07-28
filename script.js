@@ -30,12 +30,12 @@ async function getSongs(folder) {
     songsUL.innerHTML = ""; // clearing the list before adding new songs
     for (const song of songs) {
         songsUL.innerHTML = songsUL.innerHTML + `<li>
-        <img class="invert" src="music.svg" alt="music">
+        <img class="invert" src="img/music.svg" alt="music">
         <div class="songDetails">
             <h6>${decodeURI(song).split(".mp3")[0]}</h6>
             <p>Suyash</p>
         </div>
-        <img class="playNow" src="play.svg" alt="Play">
+        <img class="playNow" src="img/play.svg" alt="Play">
     </li>`;
     }
 
@@ -46,7 +46,7 @@ async function getSongs(folder) {
             adjustHighlightAndBrightness();
         });
     });
-    // return songs; // since songs is global variable
+    return songs; // since songs is global variable not required waise but to play 1st song it is required.
 
 }
 //getSongs function returns a promise that has to be fulfilled so everything should go inside the main function which needs to be called.
@@ -56,7 +56,7 @@ const playMusic = (track, pause = false) => {
     // Setting the source of the audio element
     if (!pause) {
         currentSong.play(); // Playing the audio
-        playPause.src = "pausebtn.svg"; // When songs start playing
+        playPause.src = "img/pausebtn.svg"; // When songs start playing
     }
     document.querySelector(".songTime").innerHTML = "00:00 / 00:00";
     document.querySelector(".songInfo").innerHTML = decodeURI(track);
@@ -87,7 +87,7 @@ async function getAllAlbums() {
     let div = document.createElement("div");
     div.innerHTML = response;
     let allAs = div.getElementsByTagName("a");
-    console.log(allAs);
+    // console.log(allAs);
 
     cardContainer = document.querySelector(".cardContainer");
     cardContainer.innerHTML = "";
@@ -98,16 +98,16 @@ async function getAllAlbums() {
 
         if (e.href.includes("/songs/")) {
             let folder = e.href.split(`/`).slice(-2)[0];
-            console.log(folder);
+            // console.log(folder);
 
             let info = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
             let response = await info.json();
-            console.log(response);
+            // console.log(response);
 
             cardContainer.innerHTML = cardContainer.innerHTML +
                 `<div data-folder="${folder}" class="card">
                 <div class="play">
-                    <img src="play.svg" alt="">
+                    <img src="img/play.svg" alt="">
                 </div>
                 <img src="/songs/${folder}/cover.jpeg" alt="">
                 <h4>${response.title}</h4>
@@ -119,6 +119,8 @@ async function getAllAlbums() {
     Array.from(document.getElementsByClassName("card")).forEach(element => {
         element.addEventListener("click", async item => {
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`);
+            playMusic(songs[0]); // Play the first song in the album
+            adjustHighlightAndBrightness();
         });
     });
 }
@@ -137,11 +139,11 @@ async function main() {
     document.getElementById("playPause").addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play();
-            playPause.src = "pausebtn.svg";
+            playPause.src = "img/pausebtn.svg";
             adjustHighlightAndBrightness();
         } else {
             currentSong.pause();
-            playPause.src = "playbtn.svg";
+            playPause.src = "img/playbtn.svg";
         }
     });
 
@@ -208,12 +210,30 @@ async function main() {
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (event) => {
         // console.log(event.target.value);
         currentSong.volume = (event.target.value) / 100;
+        if(currentSong.volume === 0){
+            vol.src = "img/mute.svg";
+        }
+        else{
+            vol.src = "img/volume.svg";
+        }
     });
 
-    document.getElementById("vol").addEventListener("click", () => {
-        currentSong.volume = 0;
-        vol.src = "mute.svg";
-      
+    let defaultVolume = 1;
+    document.getElementById("vol").addEventListener("click", e => {
+        
+        if(currentSong.volume !== 0)
+        {
+            defaultVolume = currentSong.volume;
+            e.target.src = "img/mute.svg";
+            currentSong.volume = 0;
+            document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
+        }
+        else{
+            e.target.src = "img/volume.svg";
+            currentSong.volume = defaultVolume;
+            document.querySelector(".range").getElementsByTagName("input")[0].value = defaultVolume*100;
+        }
+        
     });
     
 }
