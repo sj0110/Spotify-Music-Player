@@ -1,0 +1,28 @@
+.bg-grey{
+    background-color: #121212;
+    color:white;
+}
+.justify-center{
+    justify-content: center;
+}
+.space-between{
+    justify-content: space-between;
+}
+.align-center{
+    align-items: center;
+}
+.flex{
+    display: flex;
+}
+.rounded{
+    border-radius: 5px;
+}
+.p-1{
+    padding: 20px 20px;
+}
+.m-1{
+    margin: 10px 10px;
+}
+.invert{
+    filter:invert(1);
+}
