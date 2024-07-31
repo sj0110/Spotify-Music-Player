@@ -509,3 +509,27 @@ input[type="range"]:hover {
         top: 59vw;
     }
 }
+@media (max-width:300px) {
+    .right header{
+        padding: 10px 5px;
+    }
+    .navs {
+        margin: 8px -10px;
+    }
+    .left{
+        left: -150%;
+    }
+    .white-btn {
+        font-size: 12px;
+        padding: 3px 10px;
+    }
+    .buttons button {
+        margin: 0px 2px;
+    }
+    .plain-btn {
+        font-size: 12px;
+    }
+    .hamburgerContainer {
+        gap: 10px;
+    }
+}
