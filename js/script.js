@@ -7,7 +7,7 @@ let currFolder; // current folder
 // Using fetch API to fetch the list of songs
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`http://127.0.0.1:3000/${currFolder}/`);
+    let a = await fetch(`/${currFolder}/`);
     let response = await a.text(); // response in form of text string
     // console.log(response); 
     // getting the list of songs in the form of table object, have to parse those songs.
@@ -82,7 +82,7 @@ function convertToMMSS(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 async function getAllAlbums() {
-    let a = await fetch(`http://127.0.0.1:3000/songs/`);
+    let a = await fetch(`/songs/`);
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -96,11 +96,11 @@ async function getAllAlbums() {
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
 
-        if (e.href.includes("/songs/")) {
+        if (e.href.includes("/songs/") && !e.href.includes(".htaccess")) {
             let folder = e.href.split(`/`).slice(-2)[0];
             // console.log(folder);
 
-            let info = await fetch(`http://127.0.0.1:3000/songs/${folder}/info.json`);
+            let info = await fetch(`/songs/${folder}/info.json`);
             let response = await info.json();
             // console.log(response);
 
